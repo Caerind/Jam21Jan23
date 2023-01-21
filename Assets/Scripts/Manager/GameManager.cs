@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     private float timer = 0.0f;
-    private bool isPlaying = false;
+    private bool isPlaying = true;
 
     private void Update()
     {
@@ -32,6 +32,7 @@ public class GameManager : Singleton<GameManager>
             if (selectedButton != null && selectedButton.GetTileObject() != null)
             {
                 LabyrintheManager.Instance.SetTile(Worldpos2D, selectedButton.GetTileObject().Type);
+                selectedButton.OnUnselect();
             }
         }
 

@@ -18,11 +18,19 @@ public class TileButtonManager : Singleton<TileButtonManager>
 
     public void SelectTileButton(TileButton tb)
     {
+        if (selectedTileButton != null)
+        {
+            UnselectTileButton();
+        }
         selectedTileButton = tb;
     }
 
     public void UnselectTileButton()
     {
+        if(selectedTileButton != null)
+        {
+            selectedTileButton.OnUnselect();
+        }
         selectedTileButton = null;
     }
 

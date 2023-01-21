@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TileButton : MonoBehaviour
 {
     private TileObject tileObject = null;
-    private Image image;
+    [SerializeField] private Image image;
+    [SerializeField] private GameObject TileSelected;
 
-    private void Start()
-    {
-        image = GetComponent<Image>();
-    }
+
     private void Update()
     {
     }
@@ -25,7 +24,17 @@ public class TileButton : MonoBehaviour
 
     public void OnClick()
     {
-        TileButtonManager.Instance.SelectTileButton(this);
+        if (TileButtonManager.Instance.GetSelectedTileButton() != this)
+        {
+            TileButtonManager.Instance.SelectTileButton(this);
+            TileSelected.SetActive(true);
+        }
+    }
+
+    public void OnUnselect()
+    {
+        //TileButtonManager.Instance.SelectTileButton(this);
+        TileSelected.SetActive(false);
     }
 
     public TileObject GetTileObject()
