@@ -28,58 +28,58 @@ public class GameApplication : Singleton<GameApplication>
         unlockedGameScenes.Add(0);
     }
 
-    public void SetPlayerWin(bool hasPlayerWin)
-    {
-        this.hasPlayerWin = hasPlayerWin;
-        if (hasPlayerWin)
-        {
-            unlockedGameScenes.AddUnique(currentGameScene + 1);
-        }
-        endGameScene.LoadScene();
-    }
+    //public void SetPlayerWin(bool hasPlayerWin)
+    //{
+    //    this.hasPlayerWin = hasPlayerWin;
+    //    if (hasPlayerWin)
+    //    {
+    //        unlockedGameScenes.AddUnique(currentGameScene + 1);
+    //    }
+    //    endGameScene.LoadScene();
+    //}
 
-    public bool GetHasPlayerWin()
-    {
-        return hasPlayerWin;
-    }
+    //public bool GetHasPlayerWin()
+    //{
+    //    return hasPlayerWin;
+    //}
 
-    public bool HasUnlockedGameScene(int index)
-    {
-        return unlockedGameScenes.Contains(index);
-    }
+    //public bool HasUnlockedGameScene(int index)
+    //{
+    //    return unlockedGameScenes.Contains(index);
+    //}
 
-    public void UnlockedGameScene(int index)
-    {
-        unlockedGameScenes.AddUnique(index);
-    }
+    //public void UnlockedGameScene(int index)
+    //{
+    //    unlockedGameScenes.AddUnique(index);
+    //}
 
-    public void SetCurrentScene(int index)
-    {
-        currentGameScene = index;
-    }
+    ////public void SetCurrentScene(int index)
+    ////{
+    ////    currentGameScene = index;
+    ////}
 
-    public int GetGameSceneCount()
-    {
-        return gameScenes.Count;
-    }
+    ////public int GetGameSceneCount()
+    ////{
+    ////    return gameScenes.Count;
+    ////}
 
-    public SceneInfo GetGameScene(int index)
-    {
-        return gameScenes[index];
-    }
+    ////public SceneInfo GetGameScene(int index)
+    ////{
+    ////    return gameScenes[index];
+    ////}
 
-    public void GoToCurrentScene()
-    {
-        GameManager.Instance.Reset();
-        gameScenes[currentGameScene].scene.LoadScene();
-    }
+    //public void GoToCurrentScene()
+    //{
+    //    GameManager.Instance.Reset();
+    //    gameScenes[currentGameScene].scene.LoadScene();
+    //}
 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void StartApplication()
-    {
-        var app = GameObject.Instantiate(Resources.Load("GameApplication"));
-        if (app == null)
-            throw new ApplicationException();
-        DontDestroyOnLoad(app);
-    }
+    //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    //private static void StartApplication()
+    //{
+    //    var app = GameObject.Instantiate(Resources.Load("GameApplication"));
+    //    if (app == null)
+    //        throw new ApplicationException();
+    //    DontDestroyOnLoad(app);
+    //}
 }
