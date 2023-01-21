@@ -1,18 +1,18 @@
 {
   "dependencies": {
-    "com.h8man.2d.navmeshplus": {
-      "version": "https://github.com/Prybh/NavMeshPlus.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "42afaa2368468def758d2ddffa39f0fa03b26b88"
-    },
     "com.prybh.behaviortree": {
       "version": "https://github.com/Prybh/BehaviorTree.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
       "hash": "935996b81f7994ba061a01db9ec4ea4317e94244"
+    },
+    "com.prybh.pathfinder": {
+      "version": "https://github.com/Prybh/Pathfinder.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e40460fde5553e6d4dcb5205b30fae9401148170"
     },
     "com.prybh.simplescenemanagement": {
       "version": "https://github.com/Prybh/SimpleSceneManagement.git",
