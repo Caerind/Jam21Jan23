@@ -12,7 +12,6 @@ public class TileButton : MonoBehaviour
     {
         image = GetComponent<Image>();
     }
-
     private void Update()
     {
     }
@@ -27,5 +26,10 @@ public class TileButton : MonoBehaviour
     public void OnClick()
     {
         TileButtonManager.Instance.SelectTileButton(this);
+    }
+
+    public TileObject GetTileObject()
+    {
+        return tileObject;
     }
 }
