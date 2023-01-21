@@ -21,4 +21,24 @@ public static class VectorExtenstions
     {
         return new Vector3(v.x, v.y, z);
     }
+
+    public static Vector2Int ToVector2(this Vector3Int v)
+    {
+        return new Vector2Int(v.x, v.y);
+    }
+
+    public static Vector2Int xy(this Vector3Int v)
+    {
+        return new Vector2Int(v.x, v.y);
+    }
+
+    public static Vector2Int xz(this Vector3Int v)
+    {
+        return new Vector2Int(v.x, v.z);
+    }
+
+    public static Vector3Int ToVector3(this Vector2Int v, int z = 0)
+    {
+        return new Vector3Int(v.x, v.y, z);
+    }
 }
