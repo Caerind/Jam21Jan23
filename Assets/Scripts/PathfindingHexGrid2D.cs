@@ -4,8 +4,6 @@ using UnityEngine.Tilemaps;
 
 public class PathfindingHexGrid2D : IGraph
 {
-    private Vector2Int size = new Vector2Int();
-
     public class TileInfo
     {
         public Vector2Int cell;
@@ -30,9 +28,9 @@ public class PathfindingHexGrid2D : IGraph
 
                     foreach (TileObject tileObject in tileObjectList.list)  // TODO : Opti ?
                     {
-                        if (tileObject.type == tile)
+                        if (tileObject.Type == tile)
                         {
-                            tileInfo.moveHexa = tileObject.moveHexa;
+                            tileInfo.moveHexa = tileObject.movehexa;
                         }
                     }
 

@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8c8d37f8963a714ab470661dd25433f, type: 3}
-  m_Name: Tile List
+  m_Script: {fileID: 11500000, guid: 167d86cdd70cb0f4895917d7fb635a29, type: 3}
+  m_Name: Tile Test 2
   m_EditorClassIdentifier: 
-  list:
-  - {fileID: 11400000, guid: fb76914d495805347b4c9442b4e4f786, type: 2}
-  - {fileID: 11400000, guid: c5d585271d59ed748873eff4b966ffe4, type: 2}
+  Type: {fileID: 0}
+  movehexa: 000000000000
+  isStartTile: 0
+  isEndTile: 0
