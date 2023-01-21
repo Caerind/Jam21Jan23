@@ -14,7 +14,9 @@ enum HexaDirection
 
 public class LabyrintheManager : Singleton<LabyrintheManager> 
 {
-    public TileObjectList tileObjectList;
+    public TileObjectList wallTileList;
+    public Vector2Int beginCoords;
+    public Vector2Int endCoords;
 
     private Tilemap tilemap;
     private PathfindingHexGrid2D grid;
@@ -31,7 +33,7 @@ public class LabyrintheManager : Singleton<LabyrintheManager>
 
     private void InitGrid()
     {
-        grid = new PathfindingHexGrid2D(tilemap, tileObjectList);
+        grid = new PathfindingHexGrid2D(tilemap, wallTileList, beginCoords, endCoords);
     }
 
     public void SetTile(Vector2 position, TileBase tile)
