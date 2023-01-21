@@ -1,7 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 
-public class CinemachineCameraShake : MonoBehaviour
+public class CinemachineCameraShake : Singleton<CinemachineCameraShake>
 {
     private CinemachineVirtualCamera virtualCamera;
     private CinemachineBasicMultiChannelPerlin noise;

@@ -16,7 +16,25 @@ public class GameManager : Singleton<GameManager>
             {
                 Reset();
             }
+
+            HandleTilePlacement();
         }
+    }
+
+    private void HandleTilePlacement()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Vector3 Worldpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 Worldpos2D = new Vector2(Worldpos.x, Worldpos.y);
+
+            TileButton selectedButton = TileButtonManager.Instance.GetSelectedTileButton();
+            if (selectedButton != null && selectedButton.GetTileObject() != null)
+            {
+                LabyrintheManager.Instance.SetTile(Worldpos2D, selectedButton.GetTileObject().Type);
+            }
+        }
+
     }
 
     private bool UpdateCheckGameFinished()
