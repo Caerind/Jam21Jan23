@@ -15,7 +15,7 @@ public class PathfindingHexGrid2D : IGraph
     private TileInfo startTile = null;
     private TileInfo endTile = null;
 
-    public PathfindingHexGrid2D(Tilemap tilemap, TileObjectList tileObjectList)
+    public PathfindingHexGrid2D(Tilemap tilemap, TileObjectList tileObjectList, Vector2Int beginCoords, Vector2Int endCoords)
     {
         for (int x = tilemap.cellBounds.xMin; x <= tilemap.cellBounds.xMax; ++x)
         {
@@ -32,19 +32,20 @@ public class PathfindingHexGrid2D : IGraph
                     {
                         if (tileObject.Type == tile)
                         {
-                            tileInfo.moveHexa = tileObject.movehexa;
-                            if (tileObject.isStartTile)
-                            {
-                                startTile = tileInfo;
-                            }
-                            if (tileObject.isEndTile)
-                            {
-                                endTile = tileInfo;
-                            }
+                            tileInfo.moveHexa = tileObject.moveHexa;
                         }
                     }
 
                     tileInfos.Add(tileInfo);
+
+                    if (tileInfo.cell == beginCoords)
+                    {
+                        startTile = tileInfo;
+                    }
+                    if (tileInfo.cell == endCoords)
+                    {
+                        endTile = tileInfo;
+                    }
                 }
             }
         }

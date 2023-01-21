@@ -8,7 +8,5 @@ using UnityEngine.Tilemaps;
 public class TileObject : ScriptableObject
 {
     public TileBase Type;
-    public bool[] movehexa = new bool[6];
-    public bool isStartTile = false;
-    public bool isEndTile = false;
+    public bool[] moveHexa = new bool[6];
 }
