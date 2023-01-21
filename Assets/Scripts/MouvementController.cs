@@ -25,6 +25,8 @@ public class MouvementController : MonoBehaviour
     //animation
     protected Animator animator;
     protected int animIDMvt;
+    [SerializeField] private float IntensiteDegatShake = 6f;
+    [SerializeField] private float TimerDegatShake = 3f;
 
 
     // Update is called once per frame
@@ -37,6 +39,13 @@ public class MouvementController : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         animIDMvt = Animator.StringToHash("mvt");
+
+    }
+
+    private void Start()
+    {
+        CinemachineCameraShake.Instance.Shake(IntensiteDegatShake, TimerDegatShake);
+
     }
 
     public void GetMouvementDirection()
@@ -46,7 +55,6 @@ public class MouvementController : MonoBehaviour
         float mvt = delta.magnitude;
 
         delta.Normalize();
-
         animator?.SetFloat(animIDMvt, mvt);
 
         if ((delta.x < -EcartVoulu || delta.x > EcartVoulu) || (delta.y < -EcartVoulu || delta.y > EcartVoulu))
@@ -54,6 +62,7 @@ public class MouvementController : MonoBehaviour
             float s = Vitesse * Time.deltaTime;
             transform.position += new Vector3(s * delta.x, s * delta.y, 0.0f);
             //Animation
+
         }
     }
 
