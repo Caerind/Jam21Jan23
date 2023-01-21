@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Tile Test
   m_EditorClassIdentifier: 
   Type: {fileID: 0}
-  movehexa: 000000000000
+  movehexa: 010101010101
+  isStartTile: 0
+  isEndTile: 0
