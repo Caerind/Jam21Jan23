@@ -6,6 +6,9 @@ public class GameManager : Singleton<GameManager>
     private float timer = 0.0f;
     private bool isPlaying = false;
 
+    [SerializeField] private float IntensiteDegatShake = 6f;
+    [SerializeField] private float TimerDegatShake = 3f;
+
     private void Update()
     {
         if (isPlaying)
@@ -56,6 +59,11 @@ public class GameManager : Singleton<GameManager>
         */
 
         return false;
+    }
+
+    public void CameraShake()
+    {
+        CinemachineCameraShake.Instance.Shake(IntensiteDegatShake, TimerDegatShake);
     }
 
     public bool IsPlaying()
