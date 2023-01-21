@@ -12,6 +12,8 @@ public class PathfindingHexGrid2D : IGraph
     };
 
     private List<TileInfo> tileInfos;
+    private TileInfo startTile = null;
+    private TileInfo endTile = null;
 
     public PathfindingHexGrid2D(Tilemap tilemap, TileObjectList tileObjectList)
     {
@@ -31,6 +33,14 @@ public class PathfindingHexGrid2D : IGraph
                         if (tileObject.Type == tile)
                         {
                             tileInfo.moveHexa = tileObject.movehexa;
+                            if (tileObject.isStartTile)
+                            {
+                                startTile = tileInfo;
+                            }
+                            if (tileObject.isEndTile)
+                            {
+                                endTile = tileInfo;
+                            }
                         }
                     }
 
@@ -39,6 +49,9 @@ public class PathfindingHexGrid2D : IGraph
             }
         }
     }
+
+    public TileInfo GetStartTile() => startTile;
+    public TileInfo GetEndTile() => endTile;
 
     public override List<NodeLink> GetNeighbors(int node)
     {
@@ -71,6 +84,31 @@ public class PathfindingHexGrid2D : IGraph
     public override bool IsValidNode(int node)
     {
         return node >= 0 && node < tileInfos.Count;
+    }
+
+    public int GetTileInfoIndex(Vector2Int cell)
+    {
+        for (int i = 0; i < tileInfos.Count; ++i)
+        {
+            if (cell == tileInfos[i].cell)
+                return i;
+        }
+        return -1;
+    }
+
+    public int GetTileInfoIndex(TileInfo tileInfo)
+    {
+        for (int i = 0; i < tileInfos.Count; ++i)
+        {
+            if (tileInfo == tileInfos[i])
+                return i;
+        }
+        return -1;
+    }
+
+    public TileInfo GetTileInfoFromIndex(int index)
+    {
+        return tileInfos[index];
     }
 
     public static Vector2Int[] GetNeighborCells(Vector2Int cell)
