@@ -3,29 +3,17 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    private float timer = 0.0f;
-    private bool isPlaying = true;
-
     [SerializeField] private float IntensiteDegatShake = 6f;
     [SerializeField] private float TimerDegatShake = 3f;
 
-    [SerializeField] public int PeloaSauvé=10;
-
-    public int PeloSauvé = 0;
+    public List<GameObject> peons = new List<GameObject>();
+    
+    [SerializeField] public int PeloaSauver=10;
+    public int PeloSauve = 0;
 
     private void Update()
     {
-        if (isPlaying)
-        {
-            timer += Time.deltaTime;
-
-            if (UpdateCheckGameFinished())
-            {
-                Reset();
-            }
-
-            HandleTilePlacement();
-        }
+        HandleTilePlacement();
     }
 
     private void HandleTilePlacement()
@@ -44,14 +32,13 @@ public class GameManager : Singleton<GameManager>
         }
 
     }
-
     
 
     private bool UpdateCheckGameFinished()
     {
 
         //Has player win ?
-        if (PeloSauvé > PeloaSauvé)
+        if (PeloSauvÃ© > PeloaSauvÃ©)
         {
             Debug.Log("Victoire");
             return true;
@@ -80,18 +67,6 @@ public class GameManager : Singleton<GameManager>
         GUI.Label(new Rect(5, 60, 100, 25), "AINext: " + aiGeneral.GetNextSelectedIndex().ToString());
     }
     */
-
-    public void RegisterStartZone()
-    {
-        //if (sortie.IsPlayerZone())
-        //{
-        //    playerZone = startZone;
-        //}
-        //else
-        //{
-        //    aiZone = startZone;
-        //}
-    }
 
     public float GetTimer()
     {

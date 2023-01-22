@@ -135,6 +135,18 @@ public class LabyrintheManager : Singleton<LabyrintheManager>
         }
     }
 
+    public Dictionary<Vector2Int, TileInfo> GetTileInfos() => tileInfos;
+
+    public Vector2Int GetCellFromPos(Vector2 pos)
+    {
+        return groundTilemap.WorldToCell(pos).ToVector2();
+    }
+
+    public Vector2 GetPosFromCell(Vector2Int cell)
+    {
+        return groundTilemap.CellToWorld(cell.ToVector3()).ToVector2();
+    }
+
     public void RequestPath(PathfindAStar astar, Vector2 from, Vector2 to)
     {
         Vector2Int cellStart = groundTilemap.WorldToCell(from.ToVector3()).ToVector2();

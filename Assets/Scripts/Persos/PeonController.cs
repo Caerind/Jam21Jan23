@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
 
 public class PeonController : MovementController
@@ -35,5 +34,11 @@ public class PeonController : MovementController
     protected void OnDrawGizmosSelected()
     {
         DrawGizmoPath();
+    }
+
+    public void Kill()
+    {
+        GameManager.Instance.peons.Remove(gameObject);
+        GameObject.Destroy(gameObject);
     }
 }

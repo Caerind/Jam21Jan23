@@ -12,7 +12,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "e40460fde5553e6d4dcb5205b30fae9401148170"
+      "hash": "dda1c5c81b2f84b4af24ee7f3bb56997d38d133c"
     },
     "com.prybh.simplescenemanagement": {
       "version": "https://github.com/Prybh/SimpleSceneManagement.git",
