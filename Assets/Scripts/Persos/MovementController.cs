@@ -45,7 +45,7 @@ public class MovementController : MonoBehaviour
     protected bool HasPath() => DestinationList != null && DestinationList.Count > 0 && IndexDestination < DestinationList.Count;
     protected bool IsComputingPath() => !astar.IsFinished();
 
-    protected void ResetPath()
+    public void ResetPath()
     {
         DestinationList = null;
     }

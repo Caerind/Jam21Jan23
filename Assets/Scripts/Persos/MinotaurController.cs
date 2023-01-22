@@ -8,13 +8,17 @@ public class MinotaurController : MovementController
     public float eatDistance = 1.0f;
 
 
-
     private int forceRecomputeCounter = 0;
 
 
     protected void Awake()
     {
         Init();
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.minotaur = gameObject;
     }
 
     protected void Update()

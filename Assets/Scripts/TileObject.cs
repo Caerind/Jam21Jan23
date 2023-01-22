@@ -6,6 +6,5 @@ using UnityEngine.Tilemaps;
 
 public class TileObject
 {
-    public TileBase tile;
     public bool[] wallDirection = new bool[6];
 }
