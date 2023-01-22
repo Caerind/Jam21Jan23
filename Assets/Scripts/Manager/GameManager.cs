@@ -7,6 +7,9 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private float TimerDegatShake = 3f;
 
     public List<GameObject> peons = new List<GameObject>();
+    
+    [SerializeField] public int PeloaSauver=10;
+    public int PeloSauve = 0;
 
     private void Update()
     {
@@ -29,9 +32,59 @@ public class GameManager : Singleton<GameManager>
         }
 
     }
+    
+
+    private bool UpdateCheckGameFinished()
+    {
+
+        //Has player win ?
+        if (PeloSauvé > PeloaSauvé)
+        {
+            Debug.Log("Victoire");
+            return true;
+        }
+        else 
+        { 
+        return false;
+        }
+    }
 
     public void CameraShake()
     {
         CinemachineCameraShake.Instance.Shake(IntensiteDegatShake, TimerDegatShake);
+    }
+
+    public bool IsPlaying()
+    {
+        return isPlaying;
+    }
+
+    /*
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(5, 5, 100, 25), "ZonePlayer: " + GetPlayerZone().GetEnemyInZoneCounter().ToString());
+        GUI.Label(new Rect(5, 35, 100, 25), "ZoneEnemy: " + GetAIZone().GetEnemyInZoneCounter().ToString());
+        GUI.Label(new Rect(5, 60, 100, 25), "AINext: " + aiGeneral.GetNextSelectedIndex().ToString());
+    }
+    */
+
+    public float GetTimer()
+    {
+        return timer;
+    }
+
+    public void Reset()
+    {
+        isPlaying = false;
+        
+        /*
+        interestPoints.Clear();
+        playerGeneral = null;
+        aiGeneral = null;
+        playerZone = null;
+        aiZone = null;
+        playerZonePoints.Clear();
+        aiZonePoints.Clear();
+        */
     }
 }
