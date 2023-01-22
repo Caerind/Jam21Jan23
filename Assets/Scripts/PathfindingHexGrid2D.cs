@@ -1,81 +1,38 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class PathfindingHexGrid2D : IGraph
 {
-    public class TileInfo
+    private Dictionary<Vector2Int, TileInfo> tileInfos = null;
+
+    public PathfindingHexGrid2D(Dictionary<Vector2Int, TileInfo> tileInfos)
     {
-        public Vector2Int cell;
-        public TileBase type = null;
-        public bool[] moveHexa = new bool[6];
-    };
-
-    private List<TileInfo> tileInfos;
-    private TileInfo startTile = null;
-    private TileInfo endTile = null;
-
-    public PathfindingHexGrid2D(Tilemap tilemap, TileObjectList tileObjectList, Vector2Int beginCoords, Vector2Int endCoords)
-    {
-        for (int x = tilemap.cellBounds.xMin; x <= tilemap.cellBounds.xMax; ++x)
-        {
-            for (int y = tilemap.cellBounds.yMin; y <= tilemap.cellBounds.yMax; ++y)
-            {
-                TileBase tile = tilemap.GetTile(new Vector3Int(x, y, 0));
-                if (tile != null)
-                {
-                    TileInfo tileInfo = new TileInfo();
-                    tileInfo.cell = new Vector2Int(x, y);
-                    tileInfo.type = tile;
-
-                    foreach (TileObject tileObject in tileObjectList.list)  // TODO : Opti ?
-                    {
-                        if (tileObject.Type == tile)
-                        {
-                            tileInfo.moveHexa = tileObject.moveHexa;
-                        }
-                    }
-
-                    tileInfos.Add(tileInfo);
-
-                    if (tileInfo.cell == beginCoords)
-                    {
-                        startTile = tileInfo;
-                    }
-                    if (tileInfo.cell == endCoords)
-                    {
-                        endTile = tileInfo;
-                    }
-                }
-            }
-        }
+        this.tileInfos = tileInfos;
     }
-
-    public TileInfo GetStartTile() => startTile;
-    public TileInfo GetEndTile() => endTile;
 
     public override List<NodeLink> GetNeighbors(int node)
     {
-        TileInfo tile = tileInfos[node];
         List<NodeLink> links = new List<NodeLink>();
 
-        Vector2Int[] n = GetNeighborCells(tile.cell);
+        Vector2Int coords = GetCoordsFromNode(node);
+        TileInfo tile = tileInfos[coords];
+        if (tile == null)
+            return null;
+
+        Vector2Int[] neighbors = GetNeighborCells(tile.cell);
         for (int dir = 0; dir < 6; ++dir)
         {
-            if (tile.moveHexa[dir])
+            if (tile.wallDirection[dir] == false)
             {
-                int nodeDest = -1;
-                for (int i = 0; i < tileInfos.Count; ++i) // TODO : Opti
+                Vector2Int otherCoords = neighbors[dir];
+                TileInfo otherTile = tileInfos.ContainsKey(otherCoords) ? tileInfos[otherCoords] : null;
+
+                if (otherTile != null && otherTile.wallDirection[(dir + 3) % 6] == false)
                 {
-                    if (tileInfos[i].cell == n[dir])
-                    {
-                        nodeDest = i;
-                        break;
-                    }
-                }
-                if (nodeDest >= 0)
-                {
-                    links.Add(new NodeLink(node, nodeDest, 1.0f));
+                    int otherNode = GetNodeFromCoords(otherCoords);
+                    float cost = 1.0f + Random.Range(-0.005f, 0.005f);
+                    links.Add(new NodeLink(node, otherNode, cost));
                 }
             }
         }
@@ -84,54 +41,44 @@ public class PathfindingHexGrid2D : IGraph
 
     public override bool IsValidNode(int node)
     {
-        return node >= 0 && node < tileInfos.Count;
+        return tileInfos.ContainsKey(GetCoordsFromNode(node));
+    }
+    public int GetNodeFromCoords(Vector2Int coords)
+    {
+        return (coords.y + minusHandler) * hash + (coords.x + minusHandler);
+    }
+    public Vector2Int GetCoordsFromNode(int node)
+    {
+        int x = node % hash;
+        int y = node / hash;
+        return new Vector2Int(x - minusHandler, y - minusHandler);
     }
 
-    public int GetTileInfoIndex(Vector2Int cell)
-    {
-        for (int i = 0; i < tileInfos.Count; ++i)
-        {
-            if (cell == tileInfos[i].cell)
-                return i;
-        }
-        return -1;
-    }
+    // Internal
 
-    public int GetTileInfoIndex(TileInfo tileInfo)
-    {
-        for (int i = 0; i < tileInfos.Count; ++i)
-        {
-            if (tileInfo == tileInfos[i])
-                return i;
-        }
-        return -1;
-    }
-
-    public TileInfo GetTileInfoFromIndex(int index)
-    {
-        return tileInfos[index];
-    }
+    private static int hash = 10000;
+    private static int minusHandler = 100;
 
     public static Vector2Int[] GetNeighborCells(Vector2Int cell)
     {
         Vector2Int[] n = new Vector2Int[6];
         if (cell.y % 2 == 0)
         {
-            n[0] = new Vector2Int(cell.x - 1, cell.y - 1);
-            n[1] = new Vector2Int(cell.x, cell.y - 1);
-            n[2] = new Vector2Int(cell.x + 1, cell.y);
-            n[3] = new Vector2Int(cell.x, cell.y + 1);
-            n[4] = new Vector2Int(cell.x - 1, cell.y + 1);
-            n[5] = new Vector2Int(cell.x - 1, cell.y);
+            n[(int)HexaDirection.NE] = new Vector2Int(cell.x, cell.y + 1);
+            n[(int)HexaDirection.E] = new Vector2Int(cell.x + 1, cell.y);
+            n[(int)HexaDirection.SE] = new Vector2Int(cell.x, cell.y - 1);
+            n[(int)HexaDirection.SW] = new Vector2Int(cell.x - 1, cell.y - 1);
+            n[(int)HexaDirection.W] = new Vector2Int(cell.x - 1, cell.y);
+            n[(int)HexaDirection.NW] = new Vector2Int(cell.x - 1, cell.y + 1);
         }
         else
         {
-            n[0] = new Vector2Int(cell.x, cell.y - 1);
-            n[1] = new Vector2Int(cell.x + 1, cell.y - 1);
-            n[2] = new Vector2Int(cell.x + 1, cell.y);
-            n[3] = new Vector2Int(cell.x + 1, cell.y + 1);
-            n[4] = new Vector2Int(cell.x, cell.y + 1);
-            n[5] = new Vector2Int(cell.x - 1, cell.y);
+            n[(int)HexaDirection.NE] = new Vector2Int(cell.x + 1, cell.y + 1);
+            n[(int)HexaDirection.E] = new Vector2Int(cell.x + 1, cell.y);
+            n[(int)HexaDirection.SE] = new Vector2Int(cell.x + 1, cell.y - 1);
+            n[(int)HexaDirection.SW] = new Vector2Int(cell.x, cell.y - 1);
+            n[(int)HexaDirection.W] = new Vector2Int(cell.x - 1, cell.y);
+            n[(int)HexaDirection.NW] = new Vector2Int(cell.x, cell.y + 1);
         }
         return n;
     }

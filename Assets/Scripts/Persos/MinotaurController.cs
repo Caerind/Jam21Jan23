@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class MinotaurController : MovementController
 {
-    public Vector2 DestinationTest;
-
     protected void Awake()
     {
-        InitializeAnimator();
+        Init();
     }
 
     protected void Update()
@@ -18,10 +16,14 @@ public class MinotaurController : MovementController
 
     protected override void UpdatePath()
     {
-        if (DestinationList == null || DestinationList.Count == 0)
+        if (!HasPath() && !IsComputingPath())
         {
-            DestinationList = LabyrintheManager.Instance.GetPath(transform.position.ToVector2(), DestinationTest);
-            IndexDestination = 0;
+            RequestPath(transform.position.ToVector2(), LabyrintheManager.Instance.endPoint.transform.position);
         }
+    }
+
+    protected void OnDrawGizmosSelected()
+    {
+        DrawGizmoPath();
     }
 }

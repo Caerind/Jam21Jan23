@@ -34,7 +34,7 @@ public class GameManager : Singleton<GameManager>
             TileButton selectedButton = TileButtonManager.Instance.GetSelectedTileButton();
             if (selectedButton != null && selectedButton.GetTileObject() != null)
             {
-                LabyrintheManager.Instance.SetTile(Worldpos2D, selectedButton.GetTileObject().Type);
+                LabyrintheManager.Instance.SetTile(Worldpos2D, selectedButton.GetTileObject());
                 selectedButton.OnUnselect();
             }
         }
