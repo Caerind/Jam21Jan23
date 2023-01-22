@@ -8,6 +8,7 @@ public class PeonController : MovementController
     //animation
     private Animator animator;
     private int Death;
+    [SerializeField] private GameObject deadBodyPlayerPrefab;
 
     protected void Awake()
     {
@@ -44,6 +45,14 @@ public class PeonController : MovementController
     public void Kill()
     {
         animator?.SetTrigger(Death);
+
+
+        // Spawn new entity
+        Instantiate(deadBodyPlayerPrefab, transform.position, Quaternion.Euler(new Vector3(0.0f, 0.0f, 0f)));
+
+        // Blood
+       // GameObject part = Instantiate(bloodDeath, transform.position, Quaternion.identity);
+
         GameManager.Instance.peons.Remove(gameObject);
         GameObject.Destroy(gameObject);
     }
