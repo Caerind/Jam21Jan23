@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PeonController : MovementController
 {
+
+    //animation
+    private Animator animator;
+    private int Death;
+
     protected void Awake()
     {
         Init();
@@ -17,7 +22,7 @@ public class PeonController : MovementController
         
         if (delta.x < 1 && delta.y<1)
         {
-            GameManager.Instance.PeloSauvé++;
+            GameManager.Instance.PeloSauve++;
             Debug.Log("Un peon de sauvé en plus");
             Destroy(gameObject);
         }
@@ -38,6 +43,7 @@ public class PeonController : MovementController
 
     public void Kill()
     {
+        animator?.SetTrigger(Death);
         GameManager.Instance.peons.Remove(gameObject);
         GameObject.Destroy(gameObject);
     }

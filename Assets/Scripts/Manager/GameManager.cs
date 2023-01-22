@@ -38,7 +38,7 @@ public class GameManager : Singleton<GameManager>
     {
 
         //Has player win ?
-        if (PeloSauvé > PeloaSauvé)
+        if (PeloSauve > PeloaSauver)
         {
             Debug.Log("Victoire");
             return true;
@@ -54,10 +54,10 @@ public class GameManager : Singleton<GameManager>
         CinemachineCameraShake.Instance.Shake(IntensiteDegatShake, TimerDegatShake);
     }
 
-    public bool IsPlaying()
-    {
-        return isPlaying;
-    }
+    //public bool IsPlaying()
+    //{
+    //    return isPlaying;
+    //}
 
     /*
     private void OnGUI()
@@ -68,14 +68,14 @@ public class GameManager : Singleton<GameManager>
     }
     */
 
-    public float GetTimer()
-    {
-        return timer;
-    }
+    //public float GetTimer()
+    //{
+    //    return timer;
+    //}
 
     public void Reset()
     {
-        isPlaying = false;
+      //  isPlaying = false;
         
         /*
         interestPoints.Clear();
