@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using static IGraph;
 
 public class MovementController : MonoBehaviour
 {
@@ -27,7 +29,6 @@ public class MovementController : MonoBehaviour
         animIDMvt = Animator.StringToHash("dir");
 
         astar = new PathfindAStar();
-        astar.Start(null, 0, 0); // Hack just to be considered as finished from the begininng
     }
 
     protected void UpdateController()
@@ -43,6 +44,11 @@ public class MovementController : MonoBehaviour
 
     protected bool HasPath() => DestinationList != null && DestinationList.Count > 0 && IndexDestination < DestinationList.Count;
     protected bool IsComputingPath() => !astar.IsFinished();
+
+    protected void ResetPath()
+    {
+        DestinationList = null;
+    }
 
     protected void RequestPath(Vector2 from, Vector2 to)
     {
@@ -64,12 +70,43 @@ public class MovementController : MonoBehaviour
                 DestinationList = LabyrintheManager.Instance.GetPathFromAstar(astar);
                 IndexDestination = 0;
             }
+
+            if (astar.IsFinished() && !HasPath())
+            {
+                var tileInfos = LabyrintheManager.Instance.GetTileInfos();
+                Vector2Int currentCell = LabyrintheManager.Instance.GetCellFromPos(transform.position);
+                Vector2Int[] neighbors = PathfindingHexGrid2D.GetNeighborCells(currentCell);
+
+                List<Vector2Int> possibles = new List<Vector2Int>();
+                for (int dir = 0; dir < 6; ++dir)
+                {
+                    if (tileInfos[currentCell].wallDirection[dir] == false)
+                    {
+                        Vector2Int otherCoords = neighbors[dir];
+                        TileInfo otherTile = tileInfos.ContainsKey(otherCoords) ? tileInfos[otherCoords] : null;
+
+                        if (otherTile != null && otherTile.wallDirection[(dir + 3) % 6] == false)
+                        {
+                            possibles.Add(otherCoords);
+                        }
+                    }
+                }
+
+                if (possibles.Count > 0)
+                {
+                    int index = Random.Range(0, possibles.Count);
+                    Vector2Int cell = possibles[index];
+                    Vector2 pos = LabyrintheManager.Instance.GetPosFromCell(cell);
+                    DestinationList = new List<Vector2> { pos };
+                    IndexDestination = 0;
+                }
+            }
         }
     }
 
     private void UpdateMovement()
     {
-        if (DestinationList != null && DestinationList.Count > 0 && IndexDestination < DestinationList.Count)
+        if (HasPath())
         {
             Vector2 delta = DestinationList[IndexDestination] - transform.position.ToVector2();
             float mvtMagnitude = delta.magnitude;

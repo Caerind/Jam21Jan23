@@ -73,12 +73,14 @@ public class Spawner : MonoBehaviour
     private void SpawnMan()
     {
         men[spawnedMan].SetActive(true);
+        GameManager.Instance.peons.Add(men[spawnedMan]);
         spawnedMan++;
     }
 
     private void SpawnWoman()
     {
         women[spawnedWoman].SetActive(true);
+        GameManager.Instance.peons.Add(women[spawnedWoman]);
         spawnedWoman++;
     }
 }
