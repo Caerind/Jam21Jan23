@@ -13,6 +13,15 @@ public class PeonController : MovementController
     protected void Update()
     {
         UpdateController();
+        //Verification de la distance avec le dernier point
+        Vector2 delta = LabyrintheManager.Instance.endPoint.transform.position.ToVector2()- transform.position.ToVector2();
+        
+        if (delta.x < 1 && delta.y<1)
+        {
+            GameManager.Instance.PeloSauvé++;
+            Debug.Log("Un peon de sauvé en plus");
+            Destroy(gameObject);
+        }
     }
 
     protected override void UpdatePath()

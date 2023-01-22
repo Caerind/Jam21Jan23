@@ -9,6 +9,10 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private float IntensiteDegatShake = 6f;
     [SerializeField] private float TimerDegatShake = 3f;
 
+    [SerializeField] public int PeloaSauvé=10;
+
+    public int PeloSauvé = 0;
+
     private void Update()
     {
         if (isPlaying)
@@ -41,25 +45,21 @@ public class GameManager : Singleton<GameManager>
 
     }
 
+    
+
     private bool UpdateCheckGameFinished()
     {
-        /*
-        // Has player win ?
-        if (playerGeneral != null && playerGeneral.GetSelectableSoldiersCount() == 0)
+
+        //Has player win ?
+        if (PeloSauvé > PeloaSauvé)
         {
-            GameApplication.Instance.SetPlayerWin(false);
+            Debug.Log("Victoire");
             return true;
         }
-
-        // Has ai win ?
-        if (aiGeneral != null && aiGeneral.GetSoldiers() != null && aiGeneral.GetSoldiers().Count == 0)
-        {
-            GameApplication.Instance.SetPlayerWin(false);
-            return true;
-        }
-        */
-
+        else 
+        { 
         return false;
+        }
     }
 
     public void CameraShake()
@@ -80,6 +80,18 @@ public class GameManager : Singleton<GameManager>
         GUI.Label(new Rect(5, 60, 100, 25), "AINext: " + aiGeneral.GetNextSelectedIndex().ToString());
     }
     */
+
+    public void RegisterStartZone()
+    {
+        //if (sortie.IsPlayerZone())
+        //{
+        //    playerZone = startZone;
+        //}
+        //else
+        //{
+        //    aiZone = startZone;
+        //}
+    }
 
     public float GetTimer()
     {
