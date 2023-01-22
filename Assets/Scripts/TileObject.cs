@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
-[CreateAssetMenu (fileName = "New Tile object", menuName = "Tile Object" )]
-public class TileObject : ScriptableObject
+public class TileObject
 {
-    public TileBase Type;
-    public bool[] moveHexa = new bool[6];
+    public TileBase tile;
+    public bool[] wallDirection = new bool[6];
 }
