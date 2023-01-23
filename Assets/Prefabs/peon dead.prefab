@@ -10,10 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5531091566193310913}
   - component: {fileID: 5531091566193310912}
-  - component: {fileID: 827835914791100384}
-  - component: {fileID: 5531091566193310926}
   m_Layer: 0
-  m_Name: Peon
+  m_Name: peon dead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,39 +84,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &827835914791100384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5531091566193310914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bc39b77cbb60004da423c69f64de3ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Vitesse: 3
-  EcartVoulu: 0.1
-  pathIteration: 5
-  deadBodyPlayerPrefab: {fileID: 5531091566193310914, guid: 3ff83025fa2a2624c9b7d4ed7729b627, type: 3}
---- !u!95 &5531091566193310926
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5531091566193310914}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 68c70212852b4e24e8c48b2b1fee053b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0

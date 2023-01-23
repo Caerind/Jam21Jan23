@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PeonController : MovementController
 {
+
+    //animation
+    private Animator animator;
+    private int Death;
+    [SerializeField] private GameObject deadBodyPlayerPrefab;
+
     protected void Awake()
     {
         Init();
@@ -17,7 +23,7 @@ public class PeonController : MovementController
         if (delta.sqrMagnitude < 1)
         {
             GameManager.Instance.PeloSauve++;
-            Debug.Log("Un peon de sauvé en plus");
+            Debug.Log("Un peon de sauvÃ© en plus");
 
             Remove();
         }
@@ -38,6 +44,14 @@ public class PeonController : MovementController
 
     public void Kill()
     {
+        animator?.SetTrigger(Death);
+
+        // Spawn new entity
+        Instantiate(deadBodyPlayerPrefab, transform.position, Quaternion.Euler(new Vector3(0.0f, 0.0f, 0f)));
+
+        // Blood
+       // GameObject part = Instantiate(bloodDeath, transform.position, Quaternion.identity);
+
         Remove();
     }
 

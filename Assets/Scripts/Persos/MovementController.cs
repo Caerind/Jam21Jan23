@@ -115,13 +115,22 @@ public class MovementController : MonoBehaviour
 
             // Gestion de la direction pour les animations
             int dir = 0;
-            if (delta.x < 0f)
+
+            if (delta.x < 0f && delta.y<0f)
             {
                 dir = 1;
             }
-            else if (delta.x > 0f)
+            else if (delta.x < 0f && delta.y > 0f)
             {
                 dir = 2;
+            }
+            else if (delta.x > 0f && delta.y > 0f)
+            {
+                dir = 3;
+            }
+            else if (delta.x > 0f && delta.y < 0f)
+            {
+                dir = 4;
             }
             else
             {
