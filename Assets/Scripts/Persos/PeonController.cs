@@ -18,14 +18,14 @@ public class PeonController : MovementController
     protected void Update()
     {
         UpdateController();
-        //Verification de la distance avec le dernier point
-        Vector2 delta = LabyrintheManager.Instance.endPoint.transform.position.ToVector2()- transform.position.ToVector2();
-        
-        if (delta.x < 1 && delta.y<1)
+
+        Vector2 delta = LabyrintheManager.Instance.endPoint.transform.position.ToVector2() - transform.position.ToVector2();
+        if (delta.sqrMagnitude < 1)
         {
             GameManager.Instance.PeloSauve++;
-            Debug.Log("Un peon de sauvé en plus");
-            Destroy(gameObject);
+            Debug.Log("Un peon de sauvÃ© en plus");
+
+            Remove();
         }
     }
 
@@ -46,13 +46,17 @@ public class PeonController : MovementController
     {
         animator?.SetTrigger(Death);
 
-
         // Spawn new entity
         Instantiate(deadBodyPlayerPrefab, transform.position, Quaternion.Euler(new Vector3(0.0f, 0.0f, 0f)));
 
         // Blood
        // GameObject part = Instantiate(bloodDeath, transform.position, Quaternion.identity);
 
+        Remove();
+    }
+
+    private void Remove()
+    {
         GameManager.Instance.peons.Remove(gameObject);
         GameObject.Destroy(gameObject);
     }

@@ -24,7 +24,7 @@ public class LabyrintheManager : Singleton<LabyrintheManager>
     public Point endPoint;
     public Tilemap groundTilemap;
     public Tilemap[] wallTilemaps = new Tilemap[6];
-    public TileBase[] walls = new TileBase[6];
+    public Tile[] walls = new Tile[6];
     public float wallPercent = 20.0f;
 
     private Dictionary<Vector2Int, TileInfo> tileInfos = new Dictionary<Vector2Int, TileInfo>();
@@ -108,12 +108,13 @@ public class LabyrintheManager : Singleton<LabyrintheManager>
 
     public void SetTile(Vector2 position, TileObject tile)
     {
-        if (tile == null || tile.tile == null)
+        if (tile == null)
             return;
 
         Vector3Int cell = groundTilemap.WorldToCell(position.ToVector3());
         Vector2Int cell2D = cell.ToVector2();
         TileInfo tileInfo = tileInfos.ContainsKey(cell2D) ? tileInfos[cell2D] : null;
+        Vector2Int[] neighbors = PathfindingHexGrid2D.GetNeighborCells(cell2D);
 
         for (int i = 0; i < 6; ++i)
         {
@@ -126,6 +127,19 @@ public class LabyrintheManager : Singleton<LabyrintheManager>
             else
             {
                 wallTilemaps[i].SetTile(cell, null);
+
+                // Also apply to neighbors
+                Vector2Int nc = neighbors[i];
+                if (tileInfos.ContainsKey(nc))
+                {
+                    TileInfo nti = tileInfos[nc];
+                    if (nti != null)
+                    {
+                        int opposite = (i + 3) % 6;
+                        tileInfo.wallDirection[opposite] = false;
+                        wallTilemaps[opposite].SetTile(nc.ToVector3(), null);
+                    }
+                }
             }
 
             if (tileInfo != null)
@@ -133,6 +147,17 @@ public class LabyrintheManager : Singleton<LabyrintheManager>
                 tileInfo.wallDirection[i] = hasWall;
             }
         }
+
+        ResetPaths();
+    }
+
+    private void ResetPaths()
+    {
+        for (int i = 0; i < GameManager.Instance.peons.Count; ++i)
+        {
+            GameManager.Instance.peons[i].GetComponent<PeonController>().ResetPath();
+        }
+        GameManager.Instance.minotaur.GetComponent<MinotaurController>().ResetPath();
     }
 
     public Dictionary<Vector2Int, TileInfo> GetTileInfos() => tileInfos;
